@@ -23,7 +23,7 @@ REGISTER_COUNT = 1 # Number of registers to read
 client = ModbusClient(HOST, PORT)
 
 # Read Modbus list
-df = pd.read_csv('C:\\Users\\spmho\\Dropbox\\Op de Kollenberg 9\\Bedrijf\\Nibe modbus\\Modbus_Nibe_S.csv')
+df = pd.read_csv('C:\\Users\\..............\\Modbus_Nibe_S.csv')
 #print(df)
 
 try:
@@ -55,7 +55,7 @@ except:
     pass
     
 # Save the DataFrame to a new CSV file
-df.to_csv('C:\\Users\\spmho\\Dropbox\\Op de Kollenberg 9\\Bedrijf\\Nibe modbus\\Modbus_Nibe_S.csv', index=False)     
+df.to_csv('C:\\Users\\...............\\Modbus_Nibe_S.csv', index=False)     
         
     
     

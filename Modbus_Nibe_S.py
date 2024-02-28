@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import pandas as pd
 
 
@@ -12,6 +11,8 @@ log = logging.getLogger()
 #CRITICAL ERROR WARNING INFO DEBUG NOTSET
 log.setLevel(logging.INFO)
 
+PATH_Load='C:\\Users\.....................Modbus_Nibe_S.csv'
+PATH_Save='C:\\Users\\....................Modbus_Nibe_S2.csv'
 
 
 # Modbus connection parameters
@@ -25,7 +26,7 @@ REGISTER_COUNT = 1 # Number of registers to read
 client = ModbusClient(HOST, PORT)
 
 # Read Modbus list
-df = pd.read_csv('C:\\Users\\...................\\Modbus_Nibe_S.csv')
+df = pd.read_csv(PATH_Load)
 #print(df)
 
 # try:
@@ -56,21 +57,10 @@ client.close()
 
     
 # Save the DataFrame to a new CSV file
-df.to_csv('C:\\Users\\.............................\\Modbus_Nibe_S2.csv', index=False)     
+df.to_csv(PATH_Save, index=False)     
         
     
     
-#    # result = client.read_input_registers(REGISTER_ADDRESS, REGISTER_COUNT)
-#     #client.write_register(REGISTER_ADDRESS, 450)
-#    # result2 = client.read_input_registers(REGISTER_ADDRESS, REGISTER_COUNT)
-
-#     if not result.isError():
-#         # Successfully read the register
-#         print("Register values:", (result.registers,result2.registers))
-#         # Process the data (conversion might be needed depending on the data format)
-#     else:
-#         # Handle error
-#         print("Error reading register")
 # finally:
     
 

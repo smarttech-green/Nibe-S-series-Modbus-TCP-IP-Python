@@ -9,7 +9,9 @@ import logging
 # Enable logging for detailed debug output
 logging.basicConfig()
 log = logging.getLogger()
-log.setLevel(logging.DEBUG)
+#CRITICAL ERROR WARNING INFO DEBUG NOTSET
+log.setLevel(logging.INFO)
+
 
 
 # Modbus connection parameters
@@ -23,39 +25,38 @@ REGISTER_COUNT = 1 # Number of registers to read
 client = ModbusClient(HOST, PORT)
 
 # Read Modbus list
-df = pd.read_csv('C:\\Users\\..............\\Modbus_Nibe_S.csv')
+df = pd.read_csv('C:\\Users\\...................\\Modbus_Nibe_S.csv')
 #print(df)
 
-try:
-    # Connect to the client
-    client.connect()
+# try:
+# Connect to the client
+client.connect()
 
-    # Read / wirte holding/input registers
-    #client.read_input_registers(REGISTER_ADDRESS, REGISTER_COUNT)
-    #client.write_register(REGISTER_ADDRESS, VALUE)
-    #client.read_holding_registers(REGISTER_ADDRESS, REGISTER_COUNT)
-    
-    for index, row in df.iterrows(): 
-        #print (index)
-        #print(row)
+# Read / write holding/input registers
+#client.read_input_registers(REGISTER_ADDRESS, REGISTER_COUNT)
+#client.write_register(REGISTER_ADDRESS, VALUE)
+#client.read_holding_registers(REGISTER_ADDRESS, REGISTER_COUNT)
+
+for index, row in df.iterrows(): 
+    if index % 50 == 0:  # Check if the current index is divisible by 10
+        print(index, " OUT OF ", len(df))
         
-        if row['Type register']=='MODBUS_INPUT_REGISTER':
-            row['Actual value']=client.read_input_registers(row['Register'], REGISTER_COUNT).registers[0]
-            print (row)
-            df.at[index, 'Actual value'] = row['Actual value']
-        elif row['Type register']=='MODBUS_HOLDING_REGISTER':
-            row['Actual value']=client.read_holding_registers(row['Register'], REGISTER_COUNT).registers[0]
-            print(row)
-            df.at[index, 'Actual value'] = row['Actual value']
-        else:
-            pass
-            
-    client.close()
-except:
-    pass
+    #print(row)
+    if row['Type register']=='MODBUS_INPUT_REGISTER':
+        row['Actual value']=client.read_input_registers(int(row['Register']), REGISTER_COUNT).registers[0]
+        # print (row)
+        df.at[index, 'Actual value'] = row['Actual value']
+    elif row['Type register']=='MODBUS_HOLDING_REGISTER':
+        row['Actual value']=client.read_holding_registers(int(row['Register']), REGISTER_COUNT).registers[0]
+        # print(row)
+        df.at[index, 'Actual value'] = row['Actual value']
+   
+# Close the client connection
+client.close()
+
     
 # Save the DataFrame to a new CSV file
-df.to_csv('C:\\Users\\...............\\Modbus_Nibe_S.csv', index=False)     
+df.to_csv('C:\\Users\\.............................\\Modbus_Nibe_S2.csv', index=False)     
         
     
     
@@ -71,7 +72,7 @@ df.to_csv('C:\\Users\\...............\\Modbus_Nibe_S.csv', index=False)
 #         # Handle error
 #         print("Error reading register")
 # finally:
-    # Close the client connection
+    
 
 
 
